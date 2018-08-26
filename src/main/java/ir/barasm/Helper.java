@@ -31,6 +31,7 @@ public class Helper {
             FileWriter fileWriter = new FileWriter(file.getAbsoluteFile(), true);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(text);
+            bufferedWriter.newLine();
             bufferedWriter.close();
         } catch (IOException ex) {
             ex.printStackTrace();

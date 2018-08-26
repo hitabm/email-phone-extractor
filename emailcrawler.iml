@@ -36,5 +36,6 @@
     <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.24" level="project" />
     <orderEntry type="library" name="Maven: com.github.ptnplanet:Java-Naive-Bayes-Classifier:1.0.7" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20180130" level="project" />
+    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.11.3" level="project" />
   </component>
 </module>

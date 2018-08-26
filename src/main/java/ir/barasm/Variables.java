@@ -8,4 +8,5 @@ public class Variables {
     public static String outputFileName = "output.txt";
     public static String stopwordsFile = "src/main/java/ir/barasm/stopwords-all.json";
     public static String trainDataDirectory = "D:/ClassifierTrainData";
+    public static String[] categories = new String[15];
 }
