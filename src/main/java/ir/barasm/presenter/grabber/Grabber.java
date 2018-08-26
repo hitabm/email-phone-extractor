@@ -24,11 +24,16 @@ public class Grabber implements IService {
 
     public void execute() {
         try {
-            ArrayList<String> urls = Helper.readFile(Variables.workingDirectory + Variables.inputFileName);
-            int numberOfCrawlers = Variables.numberOfCrawlers;
+            ArrayList<String> seeds = Helper.readFile(Variables.crawlStorageFolder + Variables.seedsFile);
 
+            /*
+             * Configuring the crawler options to initialize crawling.
+             */
             CrawlConfig config = new CrawlConfig();
-            config.setCrawlStorageFolder(Variables.workingDirectory);
+            config.setCrawlStorageFolder(Variables.crawlStorageFolder);
+            config.setIncludeHttpsPages(true);
+            config.setMaxDepthOfCrawling(Variables.maxDepthOfCrawling);
+            config.setMaxPagesToFetch(Variables.maxPagesToFetch);
 
             /*
              * Instantiate the controller for this crawl.
@@ -43,8 +48,8 @@ public class Grabber implements IService {
              * URLs that are fetched and then the crawler starts following links
              * which are found in these pages
              */
-            for (String url : urls) {
-                controller.addSeed(url);
+            for (String seed : seeds) {
+                controller.addSeed(seed);
             }
 
             /*
@@ -52,7 +57,7 @@ public class Grabber implements IService {
              * will reach the line after this only when crawling is finished.
              */
             PageCrawler.configure(processorEvent, queueManager);
-            controller.start(PageCrawler.class, numberOfCrawlers);
+            controller.start(PageCrawler.class, Variables.numberOfCrawlers);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

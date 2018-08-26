@@ -22,7 +22,7 @@ public class PhoneNumberExtractor implements IService {
         for (String html : htmls) {
             Matcher m = Pattern.compile("\\(('+'|00)?([0-9]{1,3})[-. ]?\\)?(([0-9]{3,4})[-. ]?)(([0-9]{3})[-. ]?)([0-9]{4})").matcher(html);
             while (m.find()) {
-                Helper.writeToFile(Variables.workingDirectory + Variables.outputFileName, m.group());
+                Helper.writeToFile(Variables.crawlStorageFolder + Variables.extractedPhoneNumbersFile, m.group());
             }
         }
     }

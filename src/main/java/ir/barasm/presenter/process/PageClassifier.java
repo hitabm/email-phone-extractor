@@ -1,6 +1,5 @@
 package ir.barasm.presenter.process;
 
-import com.google.common.io.Files;
 import de.daslaboratorium.machinelearning.classifier.Classifier;
 import de.daslaboratorium.machinelearning.classifier.bayes.BayesClassifier;
 import ir.barasm.Helper;
@@ -10,10 +9,8 @@ import ir.barasm.presenter.queue.QueueManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class PageClassifier implements IService {
     private Classifier<String, String> nBayes = new BayesClassifier<>();

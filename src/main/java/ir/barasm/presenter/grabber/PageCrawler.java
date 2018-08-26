@@ -21,12 +21,12 @@ public class PageCrawler extends WebCrawler {
     }
 
     private final static Pattern FILTERS =
-            Pattern.compile(".*(\\.(css|js|mid|mp2|mp3|mp4|wav|avi|mov|mpeg|ram|m4v|pdf|rm|smil|wmv|swf|wma|zip|rar|gz|bmp|gif|jpe?g|png|tiff?))$");
+            Pattern.compile(".*(\\.(css|js|rss|mid|mp2|mp3|mp4|wav|avi|mov|mpeg|ram|m4v|pdf|rm|smil|wmv|swf|wma|zip|rar|gz|bmp|gif|jpe?g|png|tiff?))$");
 
     @Override
     public boolean shouldVisit(Page referringPage, WebURL url) {
         String href = url.getURL().toLowerCase();
-        return !FILTERS.matcher(href).matches();
+        return !FILTERS.matcher(href).matches() && !href.contains("js") && !href.contains("css") && !href.contains("rss");
     }
 
     @Override

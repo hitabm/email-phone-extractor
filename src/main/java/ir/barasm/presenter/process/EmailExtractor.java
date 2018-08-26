@@ -22,7 +22,7 @@ public class EmailExtractor implements IService {
         for (String html : htmls) {
             Matcher m = Pattern.compile("[a-zA-Z0-9_.+-]+(@|\\[at\\])[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+").matcher(html);
             while (m.find()) {
-                Helper.writeToFile(Variables.workingDirectory + Variables.outputFileName, m.group());
+                Helper.writeToFile(Variables.crawlStorageFolder + Variables.extractedEmailsFile, m.group());
             }
         }
     }
