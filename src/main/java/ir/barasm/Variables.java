@@ -11,5 +11,5 @@ public class Variables {
     public static String extractedPhoneNumbersFile = "phones.txt";
     public static String stopwordsFile = "src/main/java/ir/barasm/stopwords-all.json";
     public static String trainDataDirectory = "D:/ClassifierTrainData";
-    public static String[] categories = new String[15];
+    public static String[] categories;
 }

@@ -38,10 +38,10 @@ public class Helper {
         }
     }
 
-    public static ArrayList<String> getLanguageStopwords(String lang) {
+    public static ArrayList<String> getLanguageStopwords(String language) {
         String json = readFile(Variables.stopwordsFile).get(0);
         JSONObject jsonObject = new JSONObject(json);
-        JSONArray jsonArray = jsonObject.getJSONArray(lang);
+        JSONArray jsonArray = jsonObject.getJSONArray(language);
         ArrayList<String> stopwords = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             stopwords.add(jsonArray.get(i).toString());
@@ -49,14 +49,24 @@ public class Helper {
         return stopwords;
     }
 
-    public static String[] getSubdirectories(String directoryPath) {
-        File file = new File(directoryPath);
-        String[] directories = file.list(new FilenameFilter() {
+    public static int getDirectoryFileCount(String directoryPath) {
+        File directory = new File(directoryPath);
+        int count = 0;
+        for (int i = 0; i < directory.listFiles().length; i++) {
+            if (directory.listFiles()[i].isFile())
+                count++;
+        }
+        return count;
+    }
+
+    public static String[] getDirectoryFileNames(String directoryPath) {
+        File directory = new File(directoryPath);
+        String[] files = directory.list(new FilenameFilter() {
             @Override
             public boolean accept(File current, String name) {
-                return new File(current, name).isDirectory();
+                return new File(current, name).isFile();
             }
         });
-        return directories;
+        return files;
     }
 }

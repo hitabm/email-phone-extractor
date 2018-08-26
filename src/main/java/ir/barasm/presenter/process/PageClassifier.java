@@ -23,10 +23,11 @@ public class PageClassifier implements IService {
     }
 
     public void init() {
-        Variables.categories = Helper.getSubdirectories(Variables.trainDataDirectory);
+        Variables.categories = new String[Helper.getDirectoryFileCount(Variables.trainDataDirectory)];
+        Variables.categories = Helper.getDirectoryFileNames(Variables.trainDataDirectory);
         ArrayList<String> categoryUrls;
         for (int i = 0; i < 15; i++) {
-            categoryUrls = Helper.readFile(Variables.trainDataDirectory + Variables.categories[i] + ".txt");
+            categoryUrls = Helper.readFile(Variables.trainDataDirectory + Variables.categories[i]); //split("\\.(?=[^\\.]+$)");
             for (String url : categoryUrls) {
                 try {
                     Document doc = Jsoup.connect(url).get();
