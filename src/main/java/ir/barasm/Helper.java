@@ -69,4 +69,23 @@ public class Helper {
         });
         return files;
     }
+
+    public static String removeStopwords(String text, String textLanguage) {
+        String newText = text;
+        for (String stopword : getLanguageStopwords(textLanguage)) {
+            newText = text.replaceAll(stopword, "");
+        }
+        return newText;
+    }
+
+    public static String[] stemAllWords(String text) {
+        Stemmer stemmer = new Stemmer();
+        String[] textWords = text.split("[ \n\t]+");
+        for (int i = 0; i < textWords.length; i++) {
+            stemmer.add(textWords[i].toCharArray(), textWords[i].length());
+            stemmer.stem();
+            textWords[i] = stemmer.toString();
+        }
+        return textWords;
+    }
 }

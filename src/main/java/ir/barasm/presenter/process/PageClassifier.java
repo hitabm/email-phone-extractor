@@ -11,11 +11,10 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PageClassifier implements IService {
     private Classifier<String, String> nBayes = new BayesClassifier<>();
-    private String[] trainCases;
-    private String[] mainCases;
     private QueueManager queueManager;
 
     public PageClassifier(QueueManager queueManager) {
@@ -26,17 +25,22 @@ public class PageClassifier implements IService {
         Variables.categories = new String[Helper.getDirectoryFileCount(Variables.trainDataDirectory)];
         Variables.categories = Helper.getDirectoryFileNames(Variables.trainDataDirectory);
         ArrayList<String> categoryUrls;
+
         for (int i = 0; i < 15; i++) {
             categoryUrls = Helper.readFile(Variables.trainDataDirectory + Variables.categories[i]); //split("\\.(?=[^\\.]+$)");
             for (String url : categoryUrls) {
                 try {
+                    //retrieve html page of url and its texts
                     Document doc = Jsoup.connect(url).get();
                     String text = doc.wholeText();
-                    for (String stopword : Helper.getLanguageStopwords("en")) {
-                        //TODO Tokenize text
-                        text.replaceAll(stopword, null);
-                    }
-                    //TODO stemming and train classifier
+                    //remove all delimiters
+                    text = text.replaceAll("[-!@#$%^&*()_+=.,\\\\;:/?><\"\'| \r\n\t]+", "");
+
+                    //remove all stopwords from text
+                    text = Helper.removeStopwords(text, "en");
+
+                    //train classifier with the category and ready form text
+                    nBayes.learn(Variables.categories[i], Arrays.asList(Helper.stemAllWords(text)));
                 } catch (IOException iox) {
                     iox.printStackTrace();
                 }
@@ -46,8 +50,13 @@ public class PageClassifier implements IService {
 
     @Override
     public void execute() {
-        //stopwords deletion
-        //stem
-        //classify
+        ArrayList<String> pagesText = queueManager.getQueue().getTexts();
+        for (String pageText : pagesText) {
+            //remove all stopwords from text
+            pageText = Helper.removeStopwords(pageText, "en");
+            //classify the page by its text
+            System.out.println(nBayes.classify(Arrays.asList(pageText)).getCategory());
+        }
+        nBayes.setMemoryCapacity(500);
     }
 }
