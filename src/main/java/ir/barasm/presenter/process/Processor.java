@@ -10,7 +10,6 @@ public class Processor implements IService, IProcessorEvent {
     private EmailExtractor emailExtractor;
     private PhoneNumberExtractor phoneNumberExtractor;
     private PageClassifier pageClassifier;
-    private int state = 0;
 
     public Processor(QueueManager queueManager) {
         this.queueManager = queueManager;
@@ -24,21 +23,15 @@ public class Processor implements IService, IProcessorEvent {
         mutex.unlock();
     }
 
-    public int getState() {
-        return state;
-    }
-
     public void execute() {
         pageClassifier.init();
         while (true) {
             mutex.lock();
-            state = 1;
             System.out.println("[!] INFO: Grabbed data and goto process fuzz!");
             pageClassifier.execute();
             emailExtractor.execute();
             phoneNumberExtractor.execute();
             queueManager.getQueue().emptyQueue();
-            state = 0;
         }
     }
 }

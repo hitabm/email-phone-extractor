@@ -1,9 +1,9 @@
 package ir.barasm;
 
 public class Variables {
-    public static int queueSize = 200;
+    public static int queueSize = 10;
     public static int maxPagesToFetch = 300;
-    public static int maxDepthOfCrawling = 1;
+    public static int maxDepthOfCrawling = 10;
     public static int numberOfCrawlers = 7;
     public static String crawlStorageFolder = "D:/CrawlFolder/";
     public static String seedsFile = "seeds.txt";

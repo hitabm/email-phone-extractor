@@ -4,6 +4,7 @@ import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
+import ir.barasm.Helper;
 import ir.barasm.Variables;
 import ir.barasm.presenter.process.IProcessorEvent;
 import ir.barasm.presenter.queue.QueueManager;
@@ -40,6 +41,9 @@ public class PageCrawler extends WebCrawler {
         }
         if (queueManager.getQueue().getSize() >= Variables.queueSize) {
             processorEvent.notifyDataReady();
+
+            //just for test TODO remove it! :)
+            Helper.writeToFile("D:/hi.txt","nothing!");
         }
     }
 }
