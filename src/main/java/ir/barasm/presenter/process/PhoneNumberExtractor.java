@@ -20,7 +20,7 @@ public class PhoneNumberExtractor implements IService {
     public void execute() {
         ArrayList<String> htmls = queueManager.getQueue().getHtmls();
         for (String html : htmls) {
-            Matcher m = Pattern.compile("\\(('+'|00)?([0-9]{1,3})[-. ]?\\)?(([0-9]{3,4})[-. ]?)(([0-9]{3})[-. ]?)([0-9]{4})").matcher(html);
+            Matcher m = Pattern.compile("\\(?('+'|00)?([0-9]{1,3})[-. ]?\\)?(([0-9]{3,4})[-. ]?)(([0-9]{3})[-. ]?)([0-9]{4})").matcher(html);
             while (m.find()) {
                 Helper.writeToFile(Variables.crawlStorageFolder + Variables.extractedPhoneNumbersFile, m.group());
             }

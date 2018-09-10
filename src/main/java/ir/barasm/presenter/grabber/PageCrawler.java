@@ -41,9 +41,6 @@ public class PageCrawler extends WebCrawler {
         }
         if (queueManager.getQueue().getSize() >= Variables.queueSize) {
             processorEvent.notifyDataReady();
-
-            //just for test TODO remove it! :)
-            Helper.writeToFile("D:/hi.txt","nothing!");
         }
     }
 }
